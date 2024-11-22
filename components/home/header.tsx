@@ -1,5 +1,6 @@
 import { Ghost } from "lucide-react";
 import Link from "next/link";
+import { SignedIn, SignedOut, SignIn, SignInButton, UserButton } from "@clerk/nextjs";
 
 //tiny component
 const NavLink=({href,children}:{href:string,children:React.ReactNode})=>{
@@ -17,7 +18,7 @@ export default function Header() {
         
         <NavLink href='/'>
             <span className="flex items-center gap-2 shrink-0">
-                <Ghost className="hover:rotate-12 transform transition duration-200 ease-in-out"/>
+                <Ghost className="hover:rotate-12 transform transition duration-100 ease-in-out"/>
                 <span className="font-extrabold text-lg">
                     Vlogify
                 </span>
@@ -28,22 +29,31 @@ export default function Header() {
             <NavLink href='#/pricing'>
             Pricing
             </NavLink>
+            <SignedIn>
             <NavLink href='#/post'>
             Your Posts
             </NavLink>
+            </SignedIn>
         </div>
         <div className="flex lg:justify-end lg:flex-1">
+            <SignedIn>
             <div className="flex gap-2 items-center">
                 <NavLink href="/dashboard">
                     Upload a video
                 </NavLink>
                 {/* profile */}
-            
-            <NavLink href="/sign-in">
-                Sign In
-            </NavLink>
+            <UserButton />
+          </div>
+          </SignedIn>
+          <SignedOut>
+            <SignInButton>
+                <NavLink href="/sign-in">
+                    Sign In
+                </NavLink>
+            </SignInButton>
+            </SignedOut>
             </div>
-        </div>
+        
     </nav>
   )
 }
